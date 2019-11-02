@@ -1,0 +1,9 @@
+name: tinkerforge
+version: 0.1.0
+
+authors:
+  - mathalaxy <schwarz.f@web.de>
+
+crystal: 0.29.0
+
+license: MIT
