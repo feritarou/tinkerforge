@@ -3,11 +3,11 @@
 	)]
 
 lib LibTF
-  struct Opaque
+  struct Device
     internal : Pointer(Void)
   end
 
-  alias IPConnection = Opaque
+  alias IPConnection = Device
 
   # Creates an IP Connection object that can be used to enumerate the available
   # devices. It is also required for the constructor of Bricks and Bricklets.

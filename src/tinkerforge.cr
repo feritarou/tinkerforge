@@ -3,23 +3,37 @@ require "socket"
 
 module TF
 
-  # An IP connection to a staple of TinkerForge bricks.
+  # A wrapper class capturing a TinkerForge device or staple.
+  class Device
+    def initialize
+      @this_device = LibTF::Device.new
+    end
+
+    # Returns a pointer used by LibTF to identify this specific object.
+    protected def ptr
+      pointerof(@this_device)
+    end
+  end
+
+  # ---------------------------------------------------------------------------------------
+
+  # Represents a staple of TinkerForge bricks and bricklets.
+  #
   # The staple can be connected to the client either through a USB cable or wirelessly,
   # if the staple to connect to contains a master brick with a wifi extension.
-  class IPConnection
-    private def ptr
-      pointerof(@connection_object)
-    end
+  class Staple < Device
 
     # =======================================================================================
     # Constructor / destructor
     # =======================================================================================
 
     def initialize
-      @connection_object = LibTF::IPConnection.new
+      super
       LibTF.ipcon_create ptr
       @connection_established = false
     end
+
+    # ---------------------------------------------------------------------------------------
 
     def finalize
       disconnect if @connection_established
@@ -27,9 +41,10 @@ module TF
     end
 
     # =======================================================================================
-    # Managing the connection
+    # Open / close connection
     # =======================================================================================
 
+    # A failure to establish a connection to the staple.
     class ConnectionException < Exception
     end
 
@@ -77,6 +92,8 @@ module TF
       end
     end
 
+    # ---------------------------------------------------------------------------------------
+
     # Disconnects from the TinkerForge staple.
     def disconnect
       if @connection_established
@@ -84,6 +101,8 @@ module TF
         @connection_established = false
       end
     end
+
+    # ---------------------------------------------------------------------------------------
 
     # Returns `true` if the connection has been successfully established, otherwise `false`.
     def established?

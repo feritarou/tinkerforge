@@ -5,8 +5,8 @@ require "./spec_helper"
 # =======================================================================================
 
 describe "TF" do
-  describe "::IPConnection" do
-    c = TF::IPConnection.new
+  describe "::Staple" do
+    c = TF::Staple.new
 
     it "sets the established property to false on initialization" do
       c.established?
