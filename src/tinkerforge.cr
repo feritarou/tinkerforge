@@ -105,8 +105,16 @@ module TF
     # ---------------------------------------------------------------------------------------
 
     # Returns `true` if the connection has been successfully established, otherwise `false`.
-    def established?
-      @connection_established
+    def connected?
+      return false unless @connection_established
+
+      state = LibTF.ipcon_get_connection_state ptr
+
+      if state == LibTF::IPCON_CONNECTION_STATE_CONNECTED
+        return true
+      else
+        return false
+      end
     end
   end
 end

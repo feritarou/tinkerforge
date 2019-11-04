@@ -6,10 +6,10 @@ require "./spec_helper"
 
 describe "TF" do
   describe "::Staple" do
-    c = TF::Staple.new
+    s = TF::Staple.new
 
     it "sets the established property to false on initialization" do
-      c.established?
+      s.connected?
       .should be_false
     end
 
@@ -22,20 +22,20 @@ describe "TF" do
         port = gets.not_nil!.to_i
 
         print "Trying to connect to #{ip_address}, port #{port}"
-        c.connect \
+        s.connect \
           ip_address: ip_address,
           port: port,
           give_feedback: true
 
-        c.established?
+        s.connected?
         .should be_true
       end
     end
 
     describe "#disconnect" do
       it "disconnects from the staple" do
-        c.disconnect
-        c.established?
+        s.disconnect
+        s.connected?
         .should be_false
       end
     end

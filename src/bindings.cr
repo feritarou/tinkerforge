@@ -68,6 +68,10 @@ lib LibTF
     ipcon : IPConnection*
   ) : LibC::Int
 
+	IPCON_CONNECTION_STATE_DISCONNECTED = 0
+	IPCON_CONNECTION_STATE_CONNECTED 		= 1
+	IPCON_CONNECTION_STATE_PENDING 			= 2 # auto-reconnect in progress
+
   # Enables or disables auto-reconnect. If auto-reconnect is enabled,
   # the IP Connection will try to reconnect to the previously given
   # host and port, if the connection is lost.
