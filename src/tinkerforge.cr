@@ -3,7 +3,7 @@ require "./bindings/**"
 module TF
 
   # Any TinkerForge device or staple.
-  class Object
+  class Entity
     def initialize
       @this_device = LibTF::Object.new
     end
@@ -15,7 +15,7 @@ module TF
   end
 
   # Abstract base class for any brick or bricklet.
-  abstract class Device < Object
+  abstract class Device < Entity
     macro inherited
       getter uid : String, staple : Staple
     end

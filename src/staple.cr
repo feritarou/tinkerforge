@@ -6,7 +6,7 @@ module TF
   #
   # The staple can be connected to the client either through a USB cable or wirelessly,
   # if the staple to connect to contains a master brick with a wifi extension.
-  class Staple < Object
+  class Staple < Entity
 
     # =======================================================================================
     # Class variables
