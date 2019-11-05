@@ -56,6 +56,7 @@ If you would like to add support for other components, please feel free to contr
 
 - [mathalaxy](https://github.com/mathalaxy) - creator and maintainer
 
+[![Docs](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://mathalaxy.github.io/tinkerforge/)
 
 [![GitHub release](https://img.shields.io/github/release/mathalaxy/tinkerforge.svg)](https://github.com/mathalaxy/tinkerforge/releases)
 
