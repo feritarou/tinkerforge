@@ -1,14 +1,8 @@
 @[Link(
-		ldflags: "#{__DIR__}/../obj/ip_connection.o"
+		ldflags: "#{__DIR__}/../../obj/ip_connection.o"
 	)]
 
 lib LibTF
-  struct Device
-    internal : Pointer(Void)
-  end
-
-  alias IPConnection = Device
-
   # Creates an IP Connection object that can be used to enumerate the available
   # devices. It is also required for the constructor of Bricks and Bricklets.
   fun ipcon_create(
@@ -133,4 +127,8 @@ lib LibTF
     callback : Void*,
     user_data : Void*
   ) : Void
+
+	IPCON_CALLBACK_CONNECTED 		= 0
+	IPCON_CALLBACK_DISCONNECTED = 1
+	IPCON_CALLBACK_ENUMERATE 		= 253
 end
