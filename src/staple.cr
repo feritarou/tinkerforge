@@ -133,7 +133,7 @@ module TF
     # This also means that if you test your connection using `#connected?` before accessing a device, you should not call `#update_devices` again - instead, just move on and access them like this:
     # ```
     # if staple.connected?
-    #   if staple.devices.any &.is_a? SilentStepperBrick
+    #   if staple.devices.any? &.is_a? SilentStepperBrick
     #     # move it
     #   end
     # end

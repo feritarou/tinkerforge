@@ -10,6 +10,7 @@ Bindings and easy-to-use wrapper classes to make Crystal code interact with [Tin
    dependencies:
      tinkerforge:
        github: mathalaxy/tinkerforge
+       branch: master
    ```
 
 2. Run `shards install`
@@ -38,9 +39,9 @@ end
 
 Currently, there is only support for a very limited set of TF components, because these are what I use in other projects. Supported bricks/bricklets are:
 
-- MasterBrick
-- SilentStepperBrick
-- RotaryPotiBricklet
+- [MasterBrick](https://www.tinkerforge.com/doc/Hardware/Bricks/Master_Brick.html)
+- [SilentStepperBrick](https://www.tinkerforge.com/doc/Hardware/Bricks/Silent_Stepper_Brick.html)
+- [RotaryPotiBricklet](https://www.tinkerforge.com/doc/Hardware/Bricklets/Rotary_Poti.html)
 
 If you would like to add support for other components, please feel free to contribute!
 
