@@ -1,8 +1,9 @@
 name: tinkerforge
 version: 0.1.0
-
+description: |
+  Crystal bindings and easy-to-use wrapper classes for TinkerForge components.
 authors:
-  - mathalaxy <schwarz.f@web.de>
+  - mathalaxy <felix@mathalaxie.de>
 
 crystal: 0.29.0
 

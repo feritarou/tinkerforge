@@ -1,4 +1,5 @@
 require "socket"
+require "./tinkerforge"
 
 module TF
 
@@ -56,6 +57,7 @@ module TF
 
     # ---------------------------------------------------------------------------------------
 
+    # Destroys the object internally maintained by the TinkerForge API.
     def finalize
       disconnect if @connection_established
       LibTF.ipcon_destroy ptr
