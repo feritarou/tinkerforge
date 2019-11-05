@@ -55,3 +55,8 @@ If you would like to add support for other components, please feel free to contr
 ## Contributors
 
 - [mathalaxy](https://github.com/mathalaxy) - creator and maintainer
+
+
+[![GitHub release](https://img.shields.io/github/release/mathalaxy/tinkerforge.svg)](https://github.com/mathalaxy/tinkerforge/releases)
+
+[![Build Status](https://travis-ci.org/mathalaxy/tinkerforge.svg?branch=master)](https://travis-ci.org/mathalaxy/tinkerforge)
