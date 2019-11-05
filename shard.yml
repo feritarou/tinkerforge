@@ -11,4 +11,4 @@ repository: https://github.com/mathalaxy/tinkerforge
 documentation: https://mathalaxy.github.io/tinkerforge/
 
 scripts:
-  postinstall: mkdir tmp && cd tmp && curl -o tf.zip "https://download.tinkerforge.com/bindings/c/tinkerforge_c_bindings_2_1_26.zip" && unzip -q tf.zip source/* && cd source && make && cd ../.. && mv tmp/source/*.o obj && rm -r tmp
+  postinstall: mkdir tmp obj && cd tmp && curl -o tf.zip "https://download.tinkerforge.com/bindings/c/tinkerforge_c_bindings_2_1_26.zip" && unzip -q tf.zip source/* && cd source && make && cd ../.. && mv tmp/source/*.o obj && rm -r tmp
