@@ -149,5 +149,11 @@ module TF
       LibTF.silent_stepper_get_driver_status ptr, out open_load, out short_to_ground, out over_temperature, out stalled, out actual_current, out full_step_active, out stallguard_result, out stealth_voltage_amplitude
       (stalled != 0)
     end
+
+    # Returns a value that can be used to detect potential stalling dangers: The lower the stallguard result, the higher the load on the stepper motor, the higher the risk of stalls.
+    def stallguard_result
+      LibTF.silent_stepper_get_driver_status ptr, out open_load, out short_to_ground, out over_temperature, out stalled, out actual_current, out full_step_active, out stallguard_result, out stealth_voltage_amplitude
+      stallguard_result
+    end
   end
 end
