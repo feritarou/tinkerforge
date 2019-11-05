@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/mathalaxy/tinkerforge">
+  <title>TF::MasterBrick - github.com/mathalaxy/tinkerforge</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/mathalaxy/tinkerforge/TF" data-name="tf">
+      <a href="../TF.html">TF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Device" data-name="tf::device">
+      <a href="../TF/Device.html">Device</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Entity" data-name="tf::entity">
+      <a href="../TF/Entity.html">Entity</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/mathalaxy/tinkerforge/TF/MasterBrick" data-name="tf::masterbrick">
+      <a href="../TF/MasterBrick.html">MasterBrick</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/RotaryPotiBricklet" data-name="tf::rotarypotibricklet">
+      <a href="../TF/RotaryPotiBricklet.html">RotaryPotiBricklet</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mathalaxy/tinkerforge/TF/SilentStepperBrick" data-name="tf::silentstepperbrick">
+      <a href="../TF/SilentStepperBrick.html">SilentStepperBrick</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/SilentStepperBrick/Direction" data-name="tf::silentstepperbrick::direction">
+      <a href="../TF/SilentStepperBrick/Direction.html">Direction</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mathalaxy/tinkerforge/TF/Staple" data-name="tf::staple">
+      <a href="../TF/Staple.html">Staple</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Staple/ConnectionException" data-name="tf::staple::connectionexception">
+      <a href="../TF/Staple/ConnectionException.html">ConnectionException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> TF::MasterBrick
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../TF/MasterBrick.html">TF::MasterBrick</a></li><li class="superclass"><a href="../TF/Device.html">TF::Device</a></li><li class="superclass"><a href="../TF/Entity.html">TF::Entity</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>A Master brick.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/mathalaxy/tinkerforge/blob/94c2507d69c5a753be4b1a16dde6ae5fe1e43571/src/bricks/master.cr#L3" target="_blank">
+        bricks/master.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEVICE_ID">
+        <strong>DEVICE_ID</strong> = <code><span class="n">13</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(uid,staple)-class-method" class="signature"><strong>.new</strong>(uid, staple)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#staple:Staple-instance-method" class="signature"><strong>#staple</strong> : Staple</a>
+        
+          <div class="summary"><p>The staple which this device belongs to.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uid:String-instance-method" class="signature"><strong>#uid</strong> : String</a>
+        
+          <div class="summary"><p>A string uniquely identifying this device.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../TF/Device.html">TF::Device</a></code></h3>
+  
+  
+    <a href="../TF/Device.html#staple:UInt64-instance-method" class="tooltip">
+      <span>staple : UInt64</span>
+    staple</a>, 
+    
+  
+    <a href="../TF/Device.html#uid:String-instance-method" class="tooltip">
+      <span>uid : String</span>
+    uid</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../TF/Entity.html">TF::Entity</a></code></h3>
+  
+  
+    <a href="../TF/Entity.html#new-class-method" class="tooltip">
+      <span>new</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(uid,staple)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(uid, staple)
+
+        <a class="method-permalink" href="#new(uid,staple)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/94c2507d69c5a753be4b1a16dde6ae5fe1e43571/src/bricks/master.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="staple:Staple-instance-method">
+      <div class="signature">
+        
+        def <strong>staple</strong> : <a href="../TF/Staple.html">Staple</a>
+
+        <a class="method-permalink" href="#staple:Staple-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class <a href="../TF/Device.html">TF::Device</a>
+            </div>
+          
+          <p>The staple which this device belongs to.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uid:String-instance-method">
+      <div class="signature">
+        
+        def <strong>uid</strong> : String
+
+        <a class="method-permalink" href="#uid:String-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class <a href="../TF/Device.html">TF::Device</a>
+            </div>
+          
+          <p>A string uniquely identifying this device.
+The UID is also shown in TinkerForge's "brick viewer".</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

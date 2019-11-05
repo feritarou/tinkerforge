@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "";
+</script>
+
+  <meta id="repository-name" content="github.com/mathalaxy/tinkerforge">
+  <title>README - github.com/mathalaxy/tinkerforge</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="github.com/mathalaxy/tinkerforge/TF" data-name="tf">
+      <a href="TF.html">TF</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Device" data-name="tf::device">
+      <a href="TF/Device.html">Device</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Entity" data-name="tf::entity">
+      <a href="TF/Entity.html">Entity</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/MasterBrick" data-name="tf::masterbrick">
+      <a href="TF/MasterBrick.html">MasterBrick</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/RotaryPotiBricklet" data-name="tf::rotarypotibricklet">
+      <a href="TF/RotaryPotiBricklet.html">RotaryPotiBricklet</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mathalaxy/tinkerforge/TF/SilentStepperBrick" data-name="tf::silentstepperbrick">
+      <a href="TF/SilentStepperBrick.html">SilentStepperBrick</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/SilentStepperBrick/Direction" data-name="tf::silentstepperbrick::direction">
+      <a href="TF/SilentStepperBrick/Direction.html">Direction</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/mathalaxy/tinkerforge/TF/Staple" data-name="tf::staple">
+      <a href="TF/Staple.html">Staple</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Staple/ConnectionException" data-name="tf::staple::connectionexception">
+      <a href="TF/Staple/ConnectionException.html">ConnectionException</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1>Tinkerforge</h1>
+
+<p>Bindings and easy-to-use wrapper classes to make Crystal code interact with <a href="https://www.tinkerforge.com/" target="_blank">TinkerForge</a> components.</p>
+
+<h2>Installation</h2>
+
+<ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
+
+<p><code></code>`yaml
+   dependencies:</p>
+
+<pre><code> tinkerforge:
+   github: mathalaxy<span class="s">/tinkerforge</code></pre>
+
+<p><code></code>`</p>
+
+<ol><li>Run <code>shards install</code></li></ol>
+
+<h2>Usage</h2>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;tinkerforge&quot;</span>
+
+staple <span class="o">=</span> <span class="t">TF</span><span class="t">::</span><span class="t">Staple</span>.<span class="k">new</span>
+staple.connect ip_address: <span class="s">&quot;localhost&quot;</span>, port: <span class="n">4223</span>
+
+<span class="k">if</span> staple.connected?
+  staple.devices.each <span class="k">do</span> <span class="o">|</span>dev<span class="o">|</span>
+    <span class="k">case</span> dev
+    <span class="k">when</span> <span class="t">TF</span><span class="t">::</span><span class="t">MasterBrick</span>
+      puts <span class="s">&quot;Master of the universe!&quot;</span>
+    <span class="k">when</span> <span class="t">TF</span><span class="t">::</span><span class="t">RotaryPotiBricklet</span>
+      puts <span class="s">&quot;Rotary Poti shows </span><span class="i">#{</span>dev.position<span class="i">}</span><span class="s">&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<h2>Development</h2>
+
+<p>Currently, there is only support for a very limited set of TF components, because these are what I use in other projects. Supported bricks/bricklets are:</p>
+
+<ul><li>MasterBrick</li><li>SilentStepperBrick</li><li>RotaryPotiBricklet</li></ul>
+
+<p>If you would like to add support for other components, please feel free to contribute!</p>
+
+<h2>Contributing</h2>
+
+<ol><li>Fork it (&lt;https://github.com/mathalaxy/tinkerforge/fork>)</li><li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li><li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li><li>Push to the branch (<code>git push origin my-new-feature</code>)</li><li>Create a new Pull Request</li></ol>
+
+<h2>Contributors</h2>
+
+<ul><li><a href="https://github.com/mathalaxy" target="_blank">mathalaxy</a> - creator and maintainer</li></ul>
+
+<p><a href="https://github.com/mathalaxy/tinkerforge/releases" target="_blank"><img src="https://img.shields.io/github/release/mathalaxy/tinkerforge.svg" alt="GitHub release"/></a></p>
+
+<p><a href="https://travis-ci.org/mathalaxy/tinkerforge" target="_blank"><img src="https://travis-ci.org/mathalaxy/tinkerforge.svg?branch=master" alt="Build Status"/></a></p>
+</div>
+</body>
+</html>
