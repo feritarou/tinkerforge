@@ -18,23 +18,25 @@ module TF
   # Abstract base class for any brick or bricklet.
   abstract class Device < Entity
     macro inherited
-      {% type_prefix = @type.stringify.gsub(/Brick(let)?|TF::/, "").underscore.id %}
-      # A string uniquely identifying this device.
-      # The UID is also shown in TinkerForge's "brick viewer".
-      getter uid : String
+      macro inherited
+        \{% type_prefix = @type.stringify.gsub(/Brick(let)?|TF::/, "").underscore.id %}
+        # A string uniquely identifying this device.
+        # The UID is also shown in TinkerForge's "brick viewer".
+        getter uid : String
 
-      # The staple which this device belongs to.
-      getter staple : Staple
+        # The staple which this device belongs to.
+        getter staple : Staple
 
-      # Creates a device's software representation by referencing its unique device ID (uid) and the staple it is built into.
-      def initialize(@uid, @staple)
-        super()
-        LibTF.{{type_prefix}}_create ptr, uid, staple.ptr
-      end
+        # Creates a device's software representation by referencing its unique device ID (uid) and the staple it is built into.
+        def initialize(@uid, @staple)
+          super()
+          LibTF.\{{type_prefix}}_create ptr, uid, staple.ptr
+        end
 
-      # Destroys a device's software representation.
-      def finalize
-        LibTF.{{type_prefix}}_destroy ptr
+        # Destroys a device's software representation.
+        def finalize
+          LibTF.\{{type_prefix}}_destroy ptr
+        end
       end
     end
   end
