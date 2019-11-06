@@ -1,7 +1,7 @@
 module TF
 
   # A Rotary Poti bricklet.
-  class RotaryPotiBricklet < Device
+  class RotaryPotiBricklet < Bricklet
     DEVICE_ID = 215
 
     # =======================================================================================

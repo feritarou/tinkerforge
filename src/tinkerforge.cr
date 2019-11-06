@@ -36,6 +36,14 @@ module TF
       end
     end
   end
+
+  # A TinkerForge [brick](https://www.tinkerforge.com/doc/Primer.html#primer-bricks).
+  class Brick < Device
+  end
+
+  # A TinkerForge [bricklet](https://www.tinkerforge.com/doc/Primer.html#primer-bricklets).
+  class Bricklet < Device
+  end
 end
 
 require "./**"

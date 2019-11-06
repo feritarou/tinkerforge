@@ -1,7 +1,7 @@
 module TF
 
   # A Silent Stepper brick.
-  class SilentStepperBrick < Device
+  class SilentStepperBrick < Brick
     DEVICE_ID = 19
 
     # =======================================================================================
