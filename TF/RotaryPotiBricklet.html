@@ -41,6 +41,16 @@
       
         <ul>
   
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Brick" data-name="tf::brick">
+      <a href="../TF/Brick.html">Brick</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Bricklet" data-name="tf::bricklet">
+      <a href="../TF/Bricklet.html">Bricklet</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Device" data-name="tf::device">
       <a href="../TF/Device.html">Device</a>
       
@@ -110,14 +120,16 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../TF/RotaryPotiBricklet.html">TF::RotaryPotiBricklet</a></li><li class="superclass"><a href="../TF/Device.html">TF::Device</a></li><li class="superclass"><a href="../TF/Entity.html">TF::Entity</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../TF/RotaryPotiBricklet.html">TF::RotaryPotiBricklet</a></li><li class="superclass"><a href="../TF/Bricklet.html">TF::Bricklet</a></li><li class="superclass"><a href="../TF/Device.html">TF::Device</a></li><li class="superclass"><a href="../TF/Entity.html">TF::Entity</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
 
   <h2>Overview</h2>
 
-  <p>A Rotary Poti bricklet.</p>
+  <p>A <a href="https://www.tinkerforge.com/doc/Hardware/Bricklets/Rotary_Poti.html" target="_blank">Rotary Poti Bricklet</a>.</p>
+
+<p><img src="https://www.tinkerforge.com/doc/_images/Bricklets/bricklet_rotary_poti_tilted_800.jpg" alt="Rotary Poti Bricklet"/></p>
 
 
 
@@ -135,7 +147,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/bricklets/rotary_poti.cr#L4" target="_blank">
+      <a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/bricklets/rotary_poti.cr#L6" target="_blank">
         bricklets/rotary_poti.cr
       </a>
     
@@ -164,6 +176,8 @@
       <li class="entry-summary">
         <a href="#new(uid,staple)-class-method" class="signature"><strong>.new</strong>(uid, staple)</a>
         
+          <div class="summary"><p>Creates a device's software representation by referencing its unique device ID (uid) and the staple it is built into.</p></div>
+        
       </li>
     
   </ul>
@@ -178,10 +192,14 @@
       <li class="entry-summary">
         <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
         
+          <div class="summary"><p>Destroys a device's software representation.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#position-instance-method" class="signature"><strong>#position</strong></a>
+        
+          <div class="summary"><p>Returns the currently selected position on the poti in degrees.</p></div>
         
       </li>
     
@@ -209,19 +227,43 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../TF/Device.html">TF::Device</a></code></h3>
+  <h3>Instance methods inherited from class <code><a href="../TF/Bricklet.html">TF::Bricklet</a></code></h3>
   
   
-    <a href="../TF/Device.html#staple:UInt64-instance-method" class="tooltip">
-      <span>staple : UInt64</span>
+    <a href="../TF/Bricklet.html#finalize-instance-method" class="tooltip">
+      <span>finalize</span>
+    finalize</a>, 
+    
+  
+    <a href="../TF/Bricklet.html#staple:Staple-instance-method" class="tooltip">
+      <span>staple : Staple</span>
     staple</a>, 
     
   
-    <a href="../TF/Device.html#uid:String-instance-method" class="tooltip">
+    <a href="../TF/Bricklet.html#uid:String-instance-method" class="tooltip">
       <span>uid : String</span>
     uid</a>
     
   
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../TF/Bricklet.html">TF::Bricklet</a></code></h3>
+  
+  
+    <a href="../TF/Bricklet.html#new(uid,staple)-class-method" class="tooltip">
+      <span>new(uid, staple)</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
 
 
     
@@ -283,10 +325,15 @@
         <a class="method-permalink" href="#new(uid,staple)-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Creates a device's software representation by referencing its unique device ID (uid) and the staple it is built into.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/bricklets/rotary_poti.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/bricklets/rotary_poti.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -306,10 +353,15 @@
         <a class="method-permalink" href="#finalize-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Destroys a device's software representation.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/bricklets/rotary_poti.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/bricklets/rotary_poti.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -322,10 +374,16 @@
         <a class="method-permalink" href="#position-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the currently selected position on the poti in degrees.
+Positions are returned as integer values in the range <code>-150.. 150</code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/bricklets/rotary_poti.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/bricklets/rotary_poti.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -339,10 +397,6 @@
       </div>
       
         <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class <a href="../TF/Device.html">TF::Device</a>
-            </div>
           
           <p>The staple which this device belongs to.</p>
         </div>
@@ -362,10 +416,6 @@
       </div>
       
         <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class <a href="../TF/Device.html">TF::Device</a>
-            </div>
           
           <p>A string uniquely identifying this device.
 The UID is also shown in TinkerForge's "brick viewer".</p>

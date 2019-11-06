@@ -41,6 +41,16 @@
       
         <ul>
   
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Brick" data-name="tf::brick">
+      <a href="../TF/Brick.html">Brick</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Bricklet" data-name="tf::bricklet">
+      <a href="../TF/Bricklet.html">Bricklet</a>
+      
+    </li>
+  
   <li class=" " data-id="github.com/mathalaxy/tinkerforge/TF/Device" data-name="tf::device">
       <a href="../TF/Device.html">Device</a>
       
@@ -119,8 +129,19 @@
 
   <p>A staple of TinkerForge bricks and bricklets.</p>
 
-<p>The staple can be connected to the client either through a USB cable or wirelessly,
-if the staple to connect to contains a master brick with a wifi extension.</p>
+<p><img src="https://www.tinkerforge.com/de/doc/_images/brick_master_stack_front_big_350.jpg" alt="A staple of TinkerForge bricks"/></p>
+
+<p>The staple can be connected to the client in two ways:</p>
+
+<ul><li>through a USB cable - this requires <code>brickd</code> ("brick daemon") to be running on the client computer,</li><li>wirelessly, if the staple comes with a master brick and wifi extension.</li></ul>
+
+<p>Once connected, accessing a brick or bricklet is as simple as it gets:</p>
+
+<pre><code> staple <span class="o">=</span> <span class="t">TF</span><span class="t">::</span><span class="t">Staple</span>.<span class="k">new</span>
+ staple.connect <span class="t">IP</span>, <span class="t">HOST</span>
+ <span class="k">if</span> staple.connected?
+   puts staple.rotary_poti.position
+ <span class="k">end</span></code></pre>
 
 
 
@@ -138,7 +159,7 @@ if the staple to connect to contains a master brick with a wifi extension.</p>
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L10" target="_blank">
+      <a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L20" target="_blank">
         staple.cr
       </a>
     
@@ -183,7 +204,7 @@ if the staple to connect to contains a master brick with a wifi extension.</p>
       <li class="entry-summary">
         <a href="#devices-instance-method" class="signature"><strong>#devices</strong></a>
         
-          <div class="summary"><p>Returns an array of all <code><a href="../TF/Device.html">Device</a></code>s (bricks/bricklets) of which this staple is built.</p></div>
+          <div class="summary"><p>Returns an array of all <code><a href="../TF/Device.html">Device</a></code>s (bricks/bricklets) in the staple.</p></div>
         
       </li>
     
@@ -198,6 +219,27 @@ if the staple to connect to contains a master brick with a wifi extension.</p>
         <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
         
           <div class="summary"><p>Destroys the object internally maintained by the TinkerForge API.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#master-instance-method" class="signature"><strong>#master</strong></a>
+        
+          <div class="summary"><p>Returns the <code><a href="../TF/MasterBrick.html">MasterBrick</a></code> in the staple.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rotary_poti-instance-method" class="signature"><strong>#rotary_poti</strong></a>
+        
+          <div class="summary"><p>Returns the <code><a href="../TF/RotaryPotiBricklet.html">RotaryPotiBricklet</a></code> in the staple.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#silent_stepper-instance-method" class="signature"><strong>#silent_stepper</strong></a>
+        
+          <div class="summary"><p>Returns the <code><a href="../TF/SilentStepperBrick.html">SilentStepperBrick</a></code> in the staple.</p></div>
         
       </li>
     
@@ -271,7 +313,7 @@ if the staple to connect to contains a master brick with a wifi extension.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -295,17 +337,15 @@ if the staple to connect to contains a master brick with a wifi extension.</p>
           
           <p>Connects to a staple of TinkerForge bricks identified by its <em>ip_address</em> and <em>port</em>.</p>
 
-<p>The staple can be connected to the client computer either through a USB cable,
-in which case <em>ip_address</em> should be "localhost",
-or wirelessly (provided the staple contains a master brick with wifi extension).</p>
+<p>The default values are suitable for a connection through a USB cable.</p>
 
-<p>If attempts to establish a connection fail for longer than <em>timeout</em>, the function raises.</p>
+<p>If attempts to establish a connection fail for longer than <em>timeout</em>, the function raises a <code><a href="../TF/Staple/ConnectionException.html">ConnectionException</a></code> or <code>Errno</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -335,7 +375,7 @@ This also means that if you test your connection using <code><a href="../TF/Stap
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L140" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -350,13 +390,13 @@ This also means that if you test your connection using <code><a href="../TF/Stap
       
         <div class="doc">
           
-          <p>Returns an array of all <code><a href="../TF/Device.html">Device</a></code>s (bricks/bricklets) of which this staple is built.</p>
+          <p>Returns an array of all <code><a href="../TF/Device.html">Device</a></code>s (bricks/bricklets) in the staple.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L198" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -377,7 +417,7 @@ This also means that if you test your connection using <code><a href="../TF/Stap
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L121" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -398,7 +438,76 @@ This also means that if you test your connection using <code><a href="../TF/Stap
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L61" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="master-instance-method">
+      <div class="signature">
+        
+        def <strong>master</strong>
+
+        <a class="method-permalink" href="#master-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the <code><a href="../TF/MasterBrick.html">MasterBrick</a></code> in the staple.</p>
+
+<p>This function assumes there is only one device of this kind in the staple; if there are multiple, it will just return the first one found.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rotary_poti-instance-method">
+      <div class="signature">
+        
+        def <strong>rotary_poti</strong>
+
+        <a class="method-permalink" href="#rotary_poti-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the <code><a href="../TF/RotaryPotiBricklet.html">RotaryPotiBricklet</a></code> in the staple.</p>
+
+<p>This function assumes there is only one device of this kind in the staple; if there are multiple, it will just return the first one found.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="silent_stepper-instance-method">
+      <div class="signature">
+        
+        def <strong>silent_stepper</strong>
+
+        <a class="method-permalink" href="#silent_stepper-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the <code><a href="../TF/SilentStepperBrick.html">SilentStepperBrick</a></code> in the staple.</p>
+
+<p>This function assumes there is only one device of this kind in the staple; if there are multiple, it will just return the first one found.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -421,7 +530,7 @@ This also means that if you test your connection using <code><a href="../TF/Stap
       <br/>
       <div>
         
-          [<a href="https://github.com/mathalaxy/tinkerforge/blob/72a5c0299b7590de49e4c87f78809b74557fda19/src/staple.cr#L188" target="_blank">View source</a>]
+          [<a href="https://github.com/mathalaxy/tinkerforge/blob/a4ea9d80b3434f86f83d27b59da0f90564c538de/src/staple.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
