@@ -5,9 +5,22 @@ module TF
 
   # A staple of TinkerForge bricks and bricklets.
   #
-  # The staple can be connected to the client either through a USB cable or wirelessly,
-  # if the staple to connect to contains a master brick with a wifi extension.
+  # ![A staple of TinkerForge bricks](https://www.tinkerforge.com/de/doc/_images/brick_master_stack_front_big_350.jpg)
+  #
+  # The staple can be connected to the client in two ways:
+  # - through a USB cable - this requires `brickd` ("brick daemon") to be running on the client computer,
+  # - wirelessly, if the staple comes with a master brick and wifi extension.
+  #
+  # Once connected, accessing a brick or bricklet is as simple as it gets:
+  #      staple = TF::Staple.new
+  #      staple.connect IP, HOST
+  #      if staple.connected?
+  #        puts staple.rotary_poti.position
+  #      end
   class Staple < Entity
+
+    {% begin %}
+    {% supported = [:RotaryPotiBricklet, :SilentStepperBrick, :MasterBrick] %}
 
     # =======================================================================================
     # Class variables
@@ -73,11 +86,9 @@ module TF
 
     # Connects to a staple of TinkerForge bricks identified by its *ip_address* and *port*.
     #
-    # The staple can be connected to the client computer either through a USB cable,
-    # in which case *ip_address* should be "localhost",
-    # or wirelessly (provided the staple contains a master brick with wifi extension).
+    # The default values are suitable for a connection through a USB cable.
     #
-    # If attempts to establish a connection fail for longer than *timeout*, the function raises.
+    # If attempts to establish a connection fail for longer than *timeout*, the function raises a `ConnectionException` or `Errno`.
     def connect(@ip_address = "localhost", @port = 4223, timeout = 3.seconds, give_feedback feedback_required = true, feedback_io = STDOUT)
       return if @connection_established
 
@@ -165,10 +176,8 @@ module TF
 
       staple_id = data.address
 
-      {% begin %}
-      {% types = [:RotaryPotiBricklet, :SilentStepperBrick, :MasterBrick] %}
       device = case device_identifier
-      {% for type in types %}
+      {% for type in supported %}
       when {{type.id}}::DEVICE_ID
         {{type.id}}.new String.new(uid), @@instances[staple_id]
       {% end %}
@@ -177,7 +186,6 @@ module TF
       if device
         @@devices[staple_id] << device
       end
-      {% end %}
     end
 
     # ---------------------------------------------------------------------------------------
@@ -194,9 +202,20 @@ module TF
     # Brick / bricklet access
     # =======================================================================================
 
-    # Returns an array of all `Device`s (bricks/bricklets) of which this staple is built.
+    # Returns an array of all `Device`s (bricks/bricklets) in the staple.
     def devices
       @@devices[@id]
     end
+
+    {% for type in supported %}
+
+    # Returns the `{{type.id}}` in the staple.
+    #
+    # This function assumes there is only one device of this kind in the staple; if there are multiple, it will just return the first one found.
+    def {{type.id.stringify.gsub(/Brick(let)?/, "").underscore.id}}
+      (devices.select &.is_a? {{type.id}}).first.as({{type.id}})
+    end
+    {% end %}
+    {% end %}
   end
 end

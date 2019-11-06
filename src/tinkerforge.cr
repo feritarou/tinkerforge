@@ -1,5 +1,6 @@
 require "./bindings/**"
 
+# Crystal wrappers for easy access to TinkerForge components
 module TF
 
   # Any TinkerForge device or staple.
