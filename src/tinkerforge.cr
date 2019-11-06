@@ -26,11 +26,13 @@ module TF
       # The staple which this device belongs to.
       getter staple : Staple
 
+      # Creates a device's software representation by referencing its unique device ID (uid) and the staple it is built into.
       def initialize(@uid, @staple)
         super()
         LibTF.{{type_prefix}}_create ptr, uid, staple.ptr
       end
 
+      # Destroys a device's software representation.
       def finalize
         LibTF.{{type_prefix}}_destroy ptr
       end

@@ -1,6 +1,8 @@
 module TF
 
-  # A Silent Stepper brick.
+  # A [Silent Stepper Brick](https://www.tinkerforge.com/doc/Hardware/Bricks/Silent_Stepper_Brick.html).
+  #
+  # ![Silent Stepper Brick](https://www.tinkerforge.com/doc/_images/Bricks/brick_silent_stepper_tilted_800.jpg)
   class SilentStepperBrick < Brick
     DEVICE_ID = 19
 
