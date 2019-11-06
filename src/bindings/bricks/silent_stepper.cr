@@ -3,6 +3,8 @@
 	)]
 
 lib LibTF
+  alias SilentStepper = Entity
+	
 	# Creates the device object \c silent_stepper with the unique device ID \c uid and adds
 	# it to the IPConnection \c ipcon.
 	fun silent_stepper_create(

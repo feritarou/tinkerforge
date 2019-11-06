@@ -8,12 +8,10 @@ module TF
     # Constructor / destructor
     # =======================================================================================
 
-    def initialize(@uid, @staple)
-      super()
-      LibTF.silent_stepper_create ptr, uid, staple.ptr
-    end
+    # Constructor is automatically generated
 
     def finalize
+      # Make sure the stepper has been stopped before loosing contact
       LibTF.silent_stepper_stop ptr
       LibTF.silent_stepper_destroy ptr
     end

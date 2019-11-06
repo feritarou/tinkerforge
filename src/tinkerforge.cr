@@ -5,7 +5,7 @@ module TF
   # Any TinkerForge device or staple.
   class Entity
     def initialize
-      @this_device = LibTF::Object.new
+      @this_device = LibTF::Entity.new
     end
 
     # Returns a pointer used by LibTF to identify this specific object.
@@ -17,15 +17,23 @@ module TF
   # Abstract base class for any brick or bricklet.
   abstract class Device < Entity
     macro inherited
-      getter uid : String, staple : Staple
+      {% type_prefix = @type.stringify.gsub(/Brick(let)?|TF::/, "").underscore.id %}
+      # A string uniquely identifying this device.
+      # The UID is also shown in TinkerForge's "brick viewer".
+      getter uid : String
+
+      # The staple which this device belongs to.
+      getter staple : Staple
+
+      def initialize(@uid, @staple)
+        super()
+        LibTF.{{type_prefix}}_create ptr, uid, staple.ptr
+      end
+
+      def finalize
+        LibTF.{{type_prefix}}_destroy ptr
+      end
     end
-
-    # A string uniquely identifying this device.
-    # The UID is also shown in TinkerForge's "brick viewer".
-    abstract def uid : String
-
-    # The staple which this device belongs to.
-    abstract def staple : UInt64
   end
 end
 

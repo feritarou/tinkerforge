@@ -3,6 +3,8 @@
 	)]
 
 lib LibTF
+	alias IPConnection = Entity
+
   # Creates an IP Connection object that can be used to enumerate the available
   # devices. It is also required for the constructor of Bricks and Bricklets.
   fun ipcon_create(

@@ -1,9 +1,5 @@
 lib LibTF
-  struct Object
+  struct Entity
     internal : Pointer(Void)
   end
-
-	alias IPConnection = Object
-	alias RotaryPoti = Object
-  alias SilentStepper = Object
 end

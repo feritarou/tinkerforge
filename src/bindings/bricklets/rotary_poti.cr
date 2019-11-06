@@ -3,6 +3,8 @@
 	)]
 
 lib LibTF
+	alias RotaryPoti = Entity
+
   # Creates the device object \c rotary_poti with the unique device ID \c uid and adds
   # it to the IPConnection \c ipcon.
   fun rotary_poti_create(
