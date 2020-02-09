@@ -48,6 +48,12 @@ module TF
   # A TinkerForge [bricklet](https://www.tinkerforge.com/doc/Primer.html#primer-bricklets).
   class Bricklet < Device
   end
+
+  module RegularCallback
+    macro included
+      @@callback_pointers = {} of UInt64 => Void*
+    end
+  end
 end
 
 require "./**"

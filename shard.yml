@@ -10,5 +10,5 @@ license: MIT
 repository: https://github.com/mathalaxy/tinkerforge
 documentation: https://mathalaxy.github.io/tinkerforge/
 
-scripts:
-  postinstall: mkdir -p dl obj && cd dl && curl -o tf.zip "https://download.tinkerforge.com/bindings/c/tinkerforge_c_bindings_2_1_26.zip" && unzip -uq tf.zip source/* && cd source && make && cd ../.. && cp dl/source/*.o obj
+# scripts:
+#   postinstall: mkdir -p dl/source obj && cd dl && curl -o tf.zip "https://download.tinkerforge.com/bindings/c/tinkerforge_c_bindings_2_1_27.zip" && unzip -uq tf.zip source/* && cd source && make && cd ../.. && cp dl/source/*.o obj

@@ -4,7 +4,7 @@
 
 lib LibTF
   alias SilentStepper = Entity
-	
+
 	# Creates the device object \c silent_stepper with the unique device ID \c uid and adds
 	# it to the IPConnection \c ipcon.
 	fun silent_stepper_create(
@@ -116,6 +116,10 @@ lib LibTF
 		silent_stepper : SilentStepper*
 	) : LibC::Int
 
+	fun silent_stepper_reset(
+		silent_stepper : SilentStepper*
+	) : LibC::Int
+
 	SILENT_STEPPER_STEP_RESOLUTION_1 = 8
 	SILENT_STEPPER_STEP_RESOLUTION_2 = 7
 	SILENT_STEPPER_STEP_RESOLUTION_4 = 6
@@ -125,4 +129,29 @@ lib LibTF
 	SILENT_STEPPER_STEP_RESOLUTION_64 = 2
 	SILENT_STEPPER_STEP_RESOLUTION_128 = 1
 	SILENT_STEPPER_STEP_RESOLUTION_256 = 0
+
+	SILENT_STEPPER_CALLBACK_UNDER_VOLTAGE = 40
+	SILENT_STEPPER_CALLBACK_POSITION_REACHED = 41
+	SILENT_STEPPER_CALLBACK_ALL_DATA = 47
+	SILENT_STEPPER_CALLBACK_NEW_STATE = 48
+
+	fun silent_stepper_register_callback(
+		silent_stepper : SilentStepper*,
+		callback_id : Int16,
+		function : Void*,
+		user_data : Void*
+	) : Void
+
+  SILENT_STEPPER_STATE_STOP = 1
+  SILENT_STEPPER_STATE_ACCELERATION = 2
+  SILENT_STEPPER_STATE_RUN = 3
+  SILENT_STEPPER_STATE_DEACCELERATION = 4
+  SILENT_STEPPER_STATE_DIRECTION_CHANGE_TO_FORWARD = 5
+  SILENT_STEPPER_STATE_DIRECTION_CHANGE_TO_BACKWARD = 6
+
+	fun silent_stepper_set_all_data_period(
+		silent_stepper : SilentStepper*,
+		period : UInt32
+	) : LibC::Int
+
 end

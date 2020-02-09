@@ -11,7 +11,7 @@ module TF
     # =======================================================================================
 
     # Returns the currently selected position on the poti in degrees.
-    # Positions are returned as integer values in the range `-150.. 150`.
+    # Positions are returned as integer values in the range `-150..150`.
     def position
       LibTF.rotary_poti_get_position ptr, out pos
       pos

@@ -20,7 +20,7 @@ module TF
   class Staple < Entity
 
     {% begin %}
-    {% supported = [:RotaryPotiBricklet, :SilentStepperBrick, :MasterBrick] %}
+    {% supported = [:MasterBrick, :SilentStepperBrick, :RotaryPotiBricklet, :LinearPotiBricklet, :LineBricklet, :PiezoSpeakerV2Bricklet ] %}
 
     # =======================================================================================
     # Class variables
