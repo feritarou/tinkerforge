@@ -56,6 +56,12 @@ lib LibTF
 		interpolation : LibC::Int
 	) : LibC::Int
 
+	fun silent_stepper_get_step_configuration(
+		silent_stepper : SilentStepper*,
+		ret_step_resolution : UInt8*,
+		ret_interpolation : LibC::Int*
+	) : LibC::Int
+
 	fun silent_stepper_set_speed_ramping(
 		silent_stepper : SilentStepper*,
 		acceleration : UInt16,

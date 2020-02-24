@@ -4,6 +4,11 @@ module TF
   #
   # ![Piezo Speaker 2.0 Bricklet](https://www.tinkerforge.com/en/doc/_images/Bricklets/bricklet_piezo_speaker_v2_tilted_800.jpg)
   class PiezoSpeakerV2Bricklet < Bricklet
+
+    # =======================================================================================
+    # Constants
+    # =======================================================================================
+
     DEVICE_ID = 2145
 
     # =======================================================================================
@@ -79,6 +84,14 @@ module TF
     def led_mode=(mode : LEDMode)
       @led_mode = mode
       LibTF.piezo_speaker_v2_set_status_led_config ptr, mode.value
+    end
+
+    # =======================================================================================
+    # Overloads
+    # =======================================================================================
+
+    protected def configure
+      LibTF.piezo_speaker_v2_set_status_led_config ptr, @led_mode.value
     end
 
   end

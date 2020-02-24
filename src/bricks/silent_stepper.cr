@@ -6,6 +6,10 @@ module TF
   class SilentStepperBrick < Brick
     include RegularCallback
 
+    # =======================================================================================
+    # Constants
+    # =======================================================================================
+
     DEVICE_ID = 19
 
     # =======================================================================================
@@ -67,23 +71,58 @@ module TF
     # Properties
     # =======================================================================================
 
+    def step_resolution : StepResolution
+      LibTF.silent_stepper_get_step_configuration ptr, out res, out interpolation
+      @step_resolution = StepResolution.new res
+      @step_resolution
+    end
+
     def step_resolution=(step_res : StepResolution)
-      LibTF.silent_stepper_set_step_configuration ptr, step_res.value, 1
+      if step_res != @step_resolution
+        LibTF.silent_stepper_set_step_configuration ptr, step_res.value, (@interpolation ? 1 : 0)
+        @step_resolution = step_res
+      end
+    end
+
+    def interpolation : Bool
+      LibTF.silent_stepper_get_step_configuration ptr, out res, out interpolation
+      @interpolation = (interpolation != 0)
+      @interpolation
+    end
+
+    def interpolation=(value : Bool)
+      if value != @interpolation
+        LibTF.silent_stepper_set_step_configuration ptr, @step_resolution.value, (value ? 1 : 0)
+        @interpolation = value
+      end
     end
 
     # =======================================================================================
     # Instance variables
     # =======================================================================================
 
+    @enabled = false
+    @status_led_enabled = false
+
+    @acceleration = 0
+    @deacceleration = 0
+
+    @max_velocity = 0
     @current_velocity = 0
 
+    @step_resolution = StepResolution::One256th
+    @interpolation = true
+
+    @external_voltage = 0
+
     # =======================================================================================
-    # Callbacks
+    # Regular callback
     # =======================================================================================
 
     # :nodoc:
     def all_data(current_velocity, current_position, remaining_steps, stack_voltage, external_voltage, current_consumption)
       @current_velocity = current_velocity.to_i32
+      @external_voltage = external_voltage.to_i32
     end
 
     # =======================================================================================
@@ -105,48 +144,20 @@ module TF
     # Enables the driver.
     def enable
       LibTF.silent_stepper_enable ptr
+      @enabled = true
     end
 
     # Disables the driver.
     # By itself, this function does not change anything in the motor configuration, thus it is possible for the motor to keep on driving while disabling programmed control.
     def disable
       LibTF.silent_stepper_disable ptr
+      @enabled = false
     end
 
     # Returns `true` if the driver is enabled, and `false` otherwise.
     def enabled?
-      LibTF.silent_stepper_is_enabled ptr, out enabled
-      (enabled == 0)
-    end
-
-    # =======================================================================================
-    # Data access mode
-    # =======================================================================================
-
-    getter regular_callback_interval = Time::Span.zero
-
-    def regular_callback_interval=(value : Time::Span)
-      @regular_callback_interval = value
-
-      if value.zero?
-        @@callback_pointers.delete object_id
-        LibTF.silent_stepper_set_all_data_period ptr, 0u32
-      else
-        boxed = Box.box(->all_data(UInt16, Int32, Int32, UInt16, UInt16, UInt16))
-
-        LibTF.silent_stepper_register_callback(
-          ptr, LibTF::SILENT_STEPPER_CALLBACK_ALL_DATA,
-          Proc(UInt16, Int32, Int32, UInt16, UInt16, UInt16, Void*, Void).new \
-          do |current_velocity, current_position, remaining_steps, stack_voltage, external_voltage, current_consumption, user_data|
-            unboxed = Box(Proc(UInt16, Int32, Int32, UInt16, UInt16, UInt16, Void)).unbox(user_data)
-            unboxed.call(current_velocity, current_position, remaining_steps, stack_voltage, external_voltage, current_consumption)
-          end.pointer,
-          boxed \
-        )
-
-        @@callback_pointers[object_id] = boxed
-        LibTF.silent_stepper_set_all_data_period ptr, value.total_milliseconds.to_u32
-      end
+      LibTF.silent_stepper_is_enabled ptr, out e
+      @enabled = (e == 1)
     end
 
     # =======================================================================================
@@ -162,28 +173,34 @@ module TF
     # The default value is 1000 steps/s².
     def acceleration
       LibTF.silent_stepper_get_speed_ramping ptr, out a, out d
+      @acceleration = a
       a
     end
 
     # Sets the acceleration of the stepper motor in steps per s².
     # The default value is 1000 steps/s².
     def acceleration=(value)
-      LibTF.silent_stepper_set_speed_ramping ptr, value, deacceleration
-      value
+      if value != @acceleration
+        LibTF.silent_stepper_set_speed_ramping ptr, value, @deacceleration
+        @acceleration = value
+      end
     end
 
     # Returns the deacceleration of the stepper motor in steps per s².
     # The default value is 1000 steps/s².
     def deacceleration
       LibTF.silent_stepper_get_speed_ramping ptr, out a, out d
+      @deacceleration = d
       d
     end
 
     # Sets the deacceleration of the stepper motor in steps per s².
     # The default value is 1000 steps/s².
     def deacceleration=(value)
-      LibTF.silent_stepper_set_speed_ramping ptr, acceleration, value
-      value
+      if value != @deacceleration
+        LibTF.silent_stepper_set_speed_ramping ptr, @acceleration, value
+        @deacceleration = value
+      end
     end
 
     # =======================================================================================
@@ -192,24 +209,37 @@ module TF
 
     # Returns the current velocity of the stepper motor in steps per second.
     def current_velocity
-      if @regular_callback_interval.zero?
+      if regular_callback?
+        @current_velocity
+      else
         LibTF.silent_stepper_get_current_velocity ptr, out value
         value.to_i32
+      end
+    end
+
+    # Returns the external voltage of the stepper motor in mV.
+    def external_voltage
+      if regular_callback?
+        @external_voltage
       else
-        @current_velocity
+        LibTF.silent_stepper_get_external_input_voltage ptr, out value
+        value.to_i32
       end
     end
 
     # Sets the maximal velocity of the stepper motor in steps per second.
     def max_velocity=(value)
-      LibTF.silent_stepper_set_max_velocity ptr, value.to_u16
-      value
+      if value != @max_velocity
+        LibTF.silent_stepper_set_max_velocity ptr, value.to_u16
+        @max_velocity = value.to_i32
+      end
     end
 
     # Returns the maximal velocity of the stepper motor in steps per second.
     def max_velocity
       LibTF.silent_stepper_get_max_velocity ptr, out value
-      value.to_i32
+      @max_velocity = value.to_i32
+      @max_velocity
     end
 
     # =======================================================================================
@@ -247,18 +277,19 @@ module TF
 
     # Enables or disables the brick's status LED.
     def status_led_enabled=(enable)
+      @status_led_enabled = enable
       if enable
         LibTF.silent_stepper_enable_status_led ptr
       else
         LibTF.silent_stepper_disable_status_led ptr
       end
-      enable
     end
 
     # Returns `true` if the brick's status LED is switched on and `false` otherwise.
     def status_led_enabled?
       LibTF.silent_stepper_is_status_led_enabled ptr, out enabled
-      (enabled != 0)
+      @status_led_enabled = (enabled != 0)
+      @status_led_enabled
     end
 
     # ---------------------------------------------------------------------------------------
@@ -274,5 +305,66 @@ module TF
       LibTF.silent_stepper_get_driver_status ptr, out open_load, out short_to_ground, out over_temperature, out stalled, out actual_current, out full_step_active, out stallguard_result, out stealth_voltage_amplitude
       stallguard_result
     end
+
+    # =======================================================================================
+    # Overrides
+    # =======================================================================================
+
+    private def set_regular_callback_period(period_in_milliseconds : UInt32)
+      LibTF.silent_stepper_set_all_data_period ptr, period_in_milliseconds
+    end
+
+    # ---------------------------------------------------------------------------------------
+
+    private def register_regular_callback_function : Void*
+      boxed = Box.box(->all_data(UInt16, Int32, Int32, UInt16, UInt16, UInt16))
+      LibTF.silent_stepper_register_callback(
+        ptr, LibTF::SILENT_STEPPER_CALLBACK_ALL_DATA,
+        Proc(UInt16, Int32, Int32, UInt16, UInt16, UInt16, Void*, Void).new \
+        do |current_velocity, current_position, remaining_steps, stack_voltage, external_voltage, current_consumption, user_data|
+          unboxed = Box(Proc(UInt16, Int32, Int32, UInt16, UInt16, UInt16, Void)).unbox(user_data)
+          unboxed.call(current_velocity, current_position, remaining_steps, stack_voltage, external_voltage, current_consumption)
+        end.pointer,
+        boxed \
+      )
+      boxed
+    end
+
+    # ---------------------------------------------------------------------------------------
+
+    protected def configure
+      super
+
+      if @enabled
+        LibTF.silent_stepper_enable ptr
+      else
+        LibTF.silent_stepper_disable ptr
+      end
+
+      if @status_led_enabled
+        LibTF.silent_stepper_enable_status_led ptr
+      else
+        LibTF.silent_stepper_disable_status_led ptr
+      end
+
+      LibTF.silent_stepper_set_step_configuration ptr, @step_resolution.value, (@interpolation ? 1 : 0)
+
+      LibTF.silent_stepper_set_speed_ramping ptr, @acceleration, @deacceleration
+      LibTF.silent_stepper_set_max_velocity ptr, @max_velocity.to_u16
+
+      set_cb_interval to: @regular_callback_interval
+    end
+
+    # ---------------------------------------------------------------------------------------
+
+    def detach
+      if attached?
+        @detached = true
+        LibTF.silent_stepper_stop ptr
+        set_cb_interval to: NONE
+        LibTF.silent_stepper_destroy ptr
+      end
+    end
+
   end
 end

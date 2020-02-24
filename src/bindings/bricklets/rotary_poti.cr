@@ -28,4 +28,21 @@ lib LibTF
     rotary_poti : RotaryPoti*,
     ret_position : Int16*
   ) : LibC::Int
+
+	fun rotary_poti_set_position_callback_period(
+		rotary_poti : RotaryPoti*,
+		period : UInt32
+	) : LibC::Int
+
+	fun rotary_poti_register_callback(
+		rotary_poti : RotaryPoti*,
+		callback_id : Int16,
+		function : Void*,
+		user_data : Void*
+	) : Void
+
+	ROTARY_POTI_CALLBACK_POSITION 						= 13
+	ROTARY_POTI_CALLBACK_ANALOG_VALUE 				= 14
+	ROTARY_POTI_CALLBACK_POSITION_REACHED 		= 15
+	ROTARY_POTI_CALLBACK_ANALOG_VALUE_REACHED = 16
 end

@@ -14,6 +14,10 @@ module TF
   class LineBricklet < Bricklet
     include RegularCallback
 
+    # =======================================================================================
+    # Constants
+    # =======================================================================================
+
     DEVICE_ID = 241
 
     # =======================================================================================
@@ -29,41 +33,12 @@ module TF
     @reflectivity = 0u16
 
     # =======================================================================================
-    # Callbacks
+    # Regular callback
     # =======================================================================================
 
     # :nodoc:
     def cb_reflectivity(reflectivity)
       @reflectivity = reflectivity
-    end
-
-    # =======================================================================================
-    # Data access mode
-    # =======================================================================================
-
-    getter regular_callback_interval = Time::Span.zero
-
-    def regular_callback_interval=(value : Time::Span)
-      @regular_callback_interval = value
-
-      if value.zero?
-        @@callback_pointers.delete object_id
-        LibTF.line_set_reflectivity_callback_period ptr, 0u32
-      else
-        boxed = Box.box(->cb_reflectivity(UInt16))
-
-        LibTF.line_register_callback(
-          ptr, LibTF::LINE_CALLBACK_REFLECTIVITY,
-          Proc(UInt16, Void*, Void).new do |reflectivity, user_data|
-            unboxed = Box(Proc(UInt16, Void)).unbox(user_data)
-            unboxed.call(reflectivity)
-          end.pointer,
-          boxed \
-        )
-
-        @@callback_pointers[object_id] = boxed
-        LibTF.line_set_reflectivity_callback_period ptr, value.total_milliseconds.to_u32
-      end
     end
 
     # =======================================================================================
@@ -74,16 +49,37 @@ module TF
     #
     # Usually black has a low reflectivity while white has a high reflectivity.
     def reflectivity
-      if @regular_callback_interval.zero?
+      if regular_callback?
+        @reflectivity
+      else
         LibTF.line_get_reflectivity ptr, out refl
         refl
-      else
-        @reflectivity
       end
     end
 
     # =======================================================================================
-    # Register an event callback
+    # Overrides
+    # =======================================================================================
+
+    private def set_regular_callback_period(period_in_milliseconds : UInt32)
+      LibTF.line_set_reflectivity_callback_period ptr, period_in_milliseconds
+    end
+
+    private def register_regular_callback_function : Void*
+      boxed = Box.box(->cb_reflectivity(UInt16))
+      LibTF.line_register_callback(
+        ptr, LibTF::LINE_CALLBACK_REFLECTIVITY,
+        Proc(UInt16, Void*, Void).new do |reflectivity, user_data|
+          unboxed = Box(Proc(UInt16, Void)).unbox(user_data)
+          unboxed.call(reflectivity)
+        end.pointer,
+        boxed \
+      )
+      boxed
+    end
+
+    # =======================================================================================
+    # Event callbacks
     # =======================================================================================
 
     def when_reflectivity(is : Is, reference : Int | Range, debounce = 100, &block : UInt16 ->)
@@ -111,5 +107,6 @@ module TF
         LibTF.line_set_debounce_period ptr, debounce
       end
     end
+
   end
 end
